@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body >
+      <body className="border mx-auto p-3.5 h-dvh">
         {children}
       </body>
     </html>
