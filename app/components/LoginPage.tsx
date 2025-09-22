@@ -43,8 +43,7 @@ const LoginPage = () => {
             }
         }
     };
-
-
+    
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-1.5 w-4/5 lg:w-1/3 items-center justify-center">
             <Input
@@ -61,7 +60,6 @@ const LoginPage = () => {
                     }
                 })} />
             {errors.email && <span className="text-red-500">{errors.email.message}</span>}
-
             <Input
                 type="password"
                 placeholder="password"
@@ -71,17 +69,14 @@ const LoginPage = () => {
                 {...register("password",
                     { required: "Mot de passe obligatoire" })} />
             {errors.password && <span className="text-red-500">{errors.password.message}</span>}
-
-
             <Button
                 type="submit"
                 className="mt-2.5 bg-red-600 hover:bg-red-500 w-[80%] text-white md:w-1/2 mx-auto rounded-2xl">
                 Se connecter
             </Button>
-
             <ToastContainer autoClose={2000} />
         </form>
-    )
+    );
 }
 
 export default LoginPage

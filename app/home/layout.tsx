@@ -3,6 +3,8 @@ import { User } from '@/interface/user.interface'
 import { Url } from '@/lib/Url'
 import axios from 'axios'
 import React, { ReactNode, useEffect, useState } from 'react'
+import Header from './components/header/Header'
+import Footer from './components/footer/Footer'
 
 const Layout = ({ children }: { children: ReactNode }) => {
 
@@ -21,14 +23,15 @@ const Layout = ({ children }: { children: ReactNode }) => {
         connected();
     }, [])
 
-    console.log("user : ",user)
+    console.log("user : ", user)
+
 
     return (
-        <>
-            <header>Header</header>
+        <div className="flex flex-col flex-grow items-center justify-center w-full ">
+            {user && <Header user={user} />}
             {children}
-            <footer>Footer</footer>
-        </>)
+            <Footer />
+        </div>)
 }
 
 export default Layout
