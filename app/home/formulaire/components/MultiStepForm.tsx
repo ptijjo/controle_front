@@ -11,6 +11,7 @@ import { Url } from "@/lib/Url";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 type Step = {
     component: React.FC;
@@ -57,7 +58,7 @@ export default function MultiStepForm() {
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <form onSubmit={methods.handleSubmit(onSubmit)} className="flex-flex-col item-center justify-center w-full">
 
                 {/* 🔹 Indicateur d'étape */}
                 <div style={{ marginBottom: "10px" }}>
@@ -89,14 +90,14 @@ export default function MultiStepForm() {
                 {/* 🔹 Boutons navigation */}
                 <div style={{ marginTop: "20px" }}>
                     {step > 0 && (
-                        <button type="button" onClick={prevStep}>
+                        <Button type="button" onClick={prevStep} className="bg-gray-950 text-white">
                             ⬅️ Précédent
-                        </button>
+                        </Button>
                     )}
                     {step < steps.length - 1 ? (
-                        <button type="button" onClick={nextStep}>
+                        <Button type="button" onClick={nextStep} className="bg-red-700 text-white">
                             ➡️ Suivant
-                        </button>
+                        </Button>
                     ) : (
                         <button type="submit">✅ Valider</button>
                     )}

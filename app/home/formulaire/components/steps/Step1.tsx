@@ -1,118 +1,129 @@
 import { InputsFormulaire } from "@/interface/inputFormulaire";
 import React from "react";
-import { useFormContext, Controller } from "react-hook-form";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-
+import { useFormContext } from "react-hook-form";
 
 const Step1: React.FC = () => {
-    const { register, control, formState: { errors } } = useFormContext<InputsFormulaire>();
+    const { register, formState: { errors } } = useFormContext<InputsFormulaire>();
 
     return (
-        <div>
-            <section>
-                <label>
-                    <p>Adresse e-mail</p>
-                    <p>*</p>
+        <div className="flex flex-col items-center justify-center w-full gap-6">
+            {/* Email */}
+            <section className="flex flex-col items-center justify-center">
+                <label className="flex flex-row gap-1.5">
+                    <span>Adresse e-mail</span>
+                    <span className="text-red-600">*</span>
                 </label>
-                <input type="email" {...register("email", { required: "L'e-mail est obligatoire" })} />
-                {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
-            </section>
-            <section>
-                <label>
-                    <p>Date du contrôle?</p>
-                    <p>*</p>
-                </label>
-                <input type="date" {...register("date", { required: "La date est obligatoire" })} />
-                {errors.date && <p style={{ color: "red" }}>{errors.date.message}</p>}
-            </section>
-            <section>
-                <label>
-                    <p>Heure arrivée contrôleur</p>
-                    <p>*</p>
-                </label>
-                <input type="time" {...register("heureReelle", { required: "L'heure d'arrivée du contrôleur est obligatoire" })} />
-                {errors.heureReelle && <p style={{ color: "red" }}>{errors.heureReelle.message}</p>}
-            </section>
-            <section>
-                <label>
-                    <p>Heure prévue d arrivée du véhicule</p>
-                    <p>*</p>
-                </label>
-                <input type="time" {...register("heurePrevue", { required: "L'heure d'arrivée du véhicule est obligatoire" })} />
-                {errors.heurePrevue && <p style={{ color: "red" }}>{errors.heurePrevue.message}</p>}
-            </section>
-
-            <section>
-                <Label>
-                    <p>Météo</p>
-                    <p>*</p>
-                </Label>
-                <Controller
-                    name="meteo"
-                    control={control}
-                    render={({ field }) => (
-                        <RadioGroup
-                            className="flex items-center justify-center gap-3.5"
-                            onValueChange={field.onChange}
-                            value={field.value}
-                        >
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="beau" id="beau" />
-                                <Label htmlFor="beau">Beau (ensoleillé ou nuageux mais sec)</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="pluvieux" id="pluvieux" />
-                                <Label htmlFor="pluvieux">Pluvieux,Neigeux(temps humide)</Label>
-                            </div>
-                        </RadioGroup>
-                    )}
+                <input
+                    type="email"
+                    {...register("email", { required: "L'e-mail est obligatoire" })}
+                    className="border border-gray-300 rounded p-2 text-base"
                 />
+                {errors.email && <p className="text-red-600">{errors.email.message}</p>}
             </section>
 
-            <section>
-                <label>
-                    <p>Lieux du contrôle?</p>
-                    <p>*</p>
+            {/* Date */}
+            <section className="flex flex-col w-full items-center justify-center">
+                <label className="flex flex-row gap-1.5">
+                    <span>Date du contrôle ?</span>
+                    <span className="text-red-600">*</span>
                 </label>
-                <input type="text" {...register("lieuControle", { required: "Le lieu de contrôle est obligatoire" })} />
-                {errors.lieuControle && <p style={{ color: "red" }}>{errors.lieuControle.message}</p>}
+                <input
+                    type="date"
+                    {...register("date", { required: "La date est obligatoire" })}
+                    className="border border-gray-300 rounded p-2 text-base"
+                />
+                {errors.date && <p className="text-red-600">{errors.date.message}</p>}
             </section>
 
-            <section>
-                <Label>
-                    <p>Client ?</p>
-                    <p>*</p>
-                </Label>
-                <Controller
-                    name="client"
-                    control={control}
-                    render={({ field }) => (
-                        <Select onValueChange={field.onChange} value={field.value}>
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Selectionner" />
-                            </SelectTrigger>
-
-                            <SelectContent className="bg-white">
-                                <SelectItem value="casas">CASAS</SelectItem>
-                                <SelectItem value="rgeFluo57">RGE FLUO57</SelectItem>
-                                <SelectItem value="casc">CASC</SelectItem>
-                                <SelectItem value="forbus">FORBUS</SelectItem>
-                                <SelectItem value="apeiMoselle">APEI Moselle</SelectItem>
-                                <SelectItem value="hombourgHaut">HOMBOURG HAUT</SelectItem>
-                                <SelectItem value="autres">AUTRES</SelectItem>
-                            </SelectContent>
-                        </Select>
-
-                    )}
+            {/* Heure arrivée contrôleur */}
+            <section className="flex flex-col w-full items-center justify-center">
+                <label className="flex flex-row gap-1.5">
+                    <span>Heure arrivée contrôleur</span>
+                    <span className="text-red-600">*</span>
+                </label>
+                <input
+                    type="time"
+                    {...register("heureReelle", { required: "L'heure d'arrivée du contrôleur est obligatoire" })}
+                    className="border border-gray-300 rounded p-2 text-base"
                 />
+                {errors.heureReelle && <p className="text-red-600">{errors.heureReelle.message}</p>}
+            </section>
+
+            {/* Heure prévue arrivée véhicule */}
+            <section className="flex flex-col w-full items-center justify-center">
+                <label className="flex flex-row gap-1.5">
+                    <span>Heure prévue d arrivée du véhicule</span>
+                    <span className="text-red-600">*</span>
+                </label>
+                <input
+                    type="time"
+                    {...register("heurePrevue", { required: "L'heure d'arrivée du véhicule est obligatoire" })}
+                    className="border border-gray-300 rounded p-2 text-base"
+                />
+                {errors.heurePrevue && <p className="text-red-600">{errors.heurePrevue.message}</p>}
+            </section>
+
+            {/* Météo */}
+            <section className="flex flex-col w-ful items-center justify-center">
+                <label className="flex flex-row gap-1.5">
+                    <span>Météo</span>
+                    <span className="text-red-600">*</span>
+                </label>
+                <div className="flex flex-col gap-2 mt-2">
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="beau"
+                            {...register("meteo", { required: "La météo est obligatoire" })}
+                        />
+                        <span>Beau (ensoleillé ou nuageux mais sec)</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="pluvieux"
+                            {...register("meteo", { required: "La météo est obligatoire" })}
+                        />
+                        <span>Pluvieux, Neigeux (temps humide)</span>
+                    </label>
+                </div>
+                {errors.meteo && <p className="text-red-600">{errors.meteo.message}</p>}
+            </section>
+
+            {/* Lieu du contrôle */}
+            <section className="flex flex-col w-full items-center justify-center">
+                <label className="flex flex-row gap-1.5">
+                    <span>Lieu du contrôle ?</span>
+                    <span className="text-red-600">*</span>
+                </label>
+                <input
+                    type="text"
+                    {...register("lieuControle", { required: "Le lieu de contrôle est obligatoire" })}
+                    className="border border-gray-300 rounded p-2 text-base"
+                />
+                {errors.lieuControle && <p className="text-red-600">{errors.lieuControle.message}</p>}
+            </section>
+
+            {/* Client */}
+            <section className="flex flex-col w-full items-center justify-center">
+                <label className="flex flex-row gap-1.5">
+                    <span>Client ?</span>
+                    <span className="text-red-600">*</span>
+                </label>
+                <select
+                    {...register("client", { required: "Le client est obligatoire" })}
+                    className="border border-gray-300 rounded p-2 text-base"
+                >
+                    <option value="">Sélectionner</option>
+                    <option value="casas">CASAS</option>
+                    <option value="rgeFluo57">RGE FLUO57</option>
+                    <option value="casc">CASC</option>
+                    <option value="forbus">FORBUS</option>
+                    <option value="apeiMoselle">APEI Moselle</option>
+                    <option value="hombourgHaut">HOMBOURG HAUT</option>
+                    <option value="autres">AUTRES</option>
+                </select>
+                {errors.client && <p className="text-red-600">{errors.client.message}</p>}
             </section>
         </div>
     );

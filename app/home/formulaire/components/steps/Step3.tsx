@@ -1,12 +1,11 @@
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { InputsFormulaire } from "@/interface/inputFormulaire";
 import React from "react";
-import { useFormContext, Controller, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 
 const Step3: React.FC = () => {
-    const { control } = useFormContext<InputsFormulaire>();
+    const { control, register, formState: { errors } } = useFormContext<InputsFormulaire>();
 
     // On "observe" la valeur du champ client et le type de ligne ou la ligne
     const client = useWatch({ control, name: "client" });
@@ -22,33 +21,25 @@ const Step3: React.FC = () => {
                         <p>N° de ligne</p>
                         <p>*</p>
                     </Label>
-                    <Controller
-                        name="numeroLigne"
-                        control={control}
-                        render={({ field }) => (
-                            <Select onValueChange={field.onChange} value={field.value}>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Selectionner" />
-                                </SelectTrigger>
-
-                                <SelectContent className="bg-white">
-                                    <SelectItem value="L1">L1</SelectItem>
-                                    <SelectItem value="L2">L2</SelectItem>
-                                    <SelectItem value="L3">L3</SelectItem>
-                                    <SelectItem value="L4">L4</SelectItem>
-                                    <SelectItem value="L5">L5</SelectItem>
-                                    <SelectItem value="L6">L6</SelectItem>
-                                    <SelectItem value="L8">L8</SelectItem>
-                                    <SelectItem value="L9">L9</SelectItem>
-                                    <SelectItem value="L10">L10</SelectItem>
-                                    <SelectItem value="Express">Express</SelectItem>
-                                    <SelectItem value="TransZac">TransZac</SelectItem>
-                                    <SelectItem value="TAD">TAD</SelectItem>
-                                </SelectContent>
-                            </Select>
-
-                        )}
-                    />
+                    <select
+                    {...register("numeroLigne", { required: "Le numéro de la ligne est obligatoire" })}
+                    className="border border-gray-300 rounded p-2 text-base"
+                >
+                    <option value="">Sélectionner</option>
+                    <option value="L1">L1</option>
+                    <option value="L2">L2</option>
+                    <option value="L3">L3</option>
+                    <option value="L4">L4</option>
+                    <option value="L5">L5</option>
+                    <option value="L6">L6</option>
+                    <option value="L8">L8</option>
+                    <option value="L9">L9</option>
+                    <option value="L10">L10</option>
+                    <option value="Express">Express</option>
+                    <option value="TransZac">TransZac</option>
+                    <option value="TAD">TAD</option>
+                </select>
+                {errors.numeroLigne && <p className="text-red-600">{errors.numeroLigne.message}</p>}
                 </section>}
         </div>
     )
