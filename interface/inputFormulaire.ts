@@ -3,6 +3,7 @@ export type InputsFormulaire = {
     email: string,
     chauffeurSignature: string,
     controllerSignature: string,
+    ligne:string,
     numeroLigne: string,
     typeLigne: string,
     lieuControle: string,
@@ -30,4 +31,7 @@ export type InputsFormulaire = {
     nbreVoyageur: number,
     nbreVoyageurIrregulier: number,
     observation: string,
+    meteo: string,
+    client: string,
+    
 }

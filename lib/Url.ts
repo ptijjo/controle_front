@@ -11,5 +11,8 @@ export const Url = {
     me:baseUrl + "/users_me",
 
     //Formulaire
-    form:baseUrl +"/forms",
+    form: baseUrl + "/forms",
+    
+    //Excel
+    download:baseUrl+"/forms"
 }

@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
 import React from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import Signature from './Signature';
@@ -12,10 +12,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { InputsFormulaire } from '@/interface/inputFormulaire';
 import axios from 'axios';
 import { Url } from '@/lib/Url';
+import { useRouter } from 'next/navigation';
 
 
 
 const Forms = () => {
+
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -49,6 +52,12 @@ const Forms = () => {
         })
 
         console.log(response.data)
+        if (response.data.message === "Formulaire crée avec succès") {
+            toast.success("Formulaire envoyé et validé !");
+             setTimeout(() => {
+                router.push("/home")
+            }, 2000);
+        }
     }
 
 
