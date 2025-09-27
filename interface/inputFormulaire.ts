@@ -23,23 +23,38 @@ export type InputsFormulaire = {
     prenom: string,
     affichageHoraire: string,
     respectItineraire?: boolean,
-    affichageDestination?: boolean,
-    affichageNumeroLigne?: boolean,
-    pictoEnfant?: boolean,
-    tarifAffiche?: boolean,
-    depliantHoraire?: boolean,
-    reglement?: boolean,
+    affichageDestination: string,
+    affichageLigne: string,
+    affichageNumeroLigne: string,
+    pictoEnfant: string,
+    affichageTarif: string,
+    depliantHoraire: string,
+    affichageReglement: string,
     tenue?: boolean,
-    carosserie?: boolean,
-    tableauBord?: boolean,
-    sol?: boolean,
+    
     temperature?: boolean,
     luminosite?: boolean,
-    nbreVoyageur: number,
-    nbreVoyageurIrregulier: number,
+   
     observationArret: string,
     observationProprete:string,
     meteo: string,
     client: string,
+
+    //Bilettique
+    billettiqueElectronique:string,
+    billettiquePapier: string,
+    fondCaisse: string,
+    titreSecours: string,
+    
+    //Proprete interieur
+    tableauDeBord: string,
+    sol: string,
+    vitres: string,
+    sieges: string,
+    observationInterieur: string,
+    
+    //Passagers
+    nbreVoyageur: number,
+    nbreVoyageurIrregulier: number,
     
 }

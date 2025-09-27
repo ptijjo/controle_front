@@ -11,11 +11,15 @@ const StepSignature = () => {
             <section className='flex flex-col lg:flex-row items-center justify-center gap-3.5 w-full mb-3.5'>
                 <Signature
                     label='Signature Chauffeur'
-                    onSave={(dataUrl) => setValue("chauffeurSignature", dataUrl)}
+                    onSave={(dataUrl) => {
+                        setValue("chauffeurSignature", dataUrl, { shouldValidate: true })
+                    }}
                 />
                 <Signature
                     label="Signature Contrôleur"
-                    onSave={(dataUrl) => setValue("controllerSignature", dataUrl)}
+                    onSave={(dataUrl) => {
+                        setValue("controllerSignature", dataUrl, { shouldValidate: true })
+                    }}
                 />
 
                 {/* Champs cachés pour stocker les signatures */}
@@ -24,6 +28,7 @@ const StepSignature = () => {
 
                 <input type="hidden" {...register("controllerSignature", { required: "La signature du contrôleur est obligatoire" })} />
                 {errors.controllerSignature && <p style={{ color: "red" }}>{errors.controllerSignature.message}</p>}
+
             </section>
         </div>
     )

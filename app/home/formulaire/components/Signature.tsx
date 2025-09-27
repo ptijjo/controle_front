@@ -22,6 +22,7 @@ const Signature = ({ label, onSave }: { label: string; onSave: (dataUrl: string)
     const handleClear = () => {
         sigPadRef.current?.clear();
         setIsSaved(false); // réaffiche le bouton si on efface
+        onSave("");
     }
 
     const handleSave = () => {

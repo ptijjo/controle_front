@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import Step1 from "./steps/Step1";
-import Step2 from "./steps/Step2";
 import { InputsFormulaire } from "@/interface/inputFormulaire";
 import Step3 from "./steps/Step3";
 import StepSignature from "./steps/StepSignature";
@@ -18,6 +17,11 @@ import ConformiteArret from "./steps/ConformiteArret";
 import Vehicule from "./steps/Vehicule";
 import ObservationArret from "./steps/ObservationArret";
 import ObservationProprete from "./steps/ObservationProprete";
+import AffichageVehicule from "./steps/AffichageVehicule";
+import Billettique from "./steps/Billettique";
+import PropreteInterieure from "./steps/PropreteInterieure";
+import Client from "./steps/Client";
+import TypeLigne from "./steps/TypeLigne";
 
 type Step = {
     component: React.FC;
@@ -26,19 +30,24 @@ type Step = {
 
 const steps: Step[] = [
     { component: Step1, fields: ["email", "date", "heurePrevue", "heureReelle", "meteo", "lieuControle", "client"] },
-    { component: Step2, fields: ["ligne", "typeLigne"] },
+    { component: TypeLigne, fields: ["ligne", "typeLigne"] },
     { component: Step3, fields: ["numeroLigne"] },
     { component: Step4, fields: ["typeArret"] },
     { component: ConformiteArret, fields: ["affichageHoraire", "presenceCadreAffichage", "zebra", "pleineVoie"] },
     { component: ObservationArret, fields: [] },
     { component: Vehicule, fields: [] },
     { component: ObservationProprete, fields: ["observationProprete"] },
+    { component: AffichageVehicule, fields: [] },
+    { component: Billettique, fields: [] },
+    { component: PropreteInterieure, fields: [] },
+    { component: Client, fields: [] },
     { component: StepSignature, fields: ["chauffeurSignature", "controllerSignature"] },
 ];
 
 export default function MultiStepForm() {
     const navigate = useRouter();
     const methods = useForm<InputsFormulaire>({ mode: "onChange" });
+
     const [step, setStep] = useState(0);
 
     const onSubmit = async (data: InputsFormulaire) => {
@@ -58,14 +67,59 @@ export default function MultiStepForm() {
 
     const nextStep = async () => {
         const isValid = await methods.trigger(steps[step].fields);
-        if (isValid) setStep((s) => s + 1);
+        if (!isValid) return; // arrête si l'étape actuelle n'est pas valide
+
+        if (step === 0) {
+            const client = methods.getValues("client");
+
+            if (client === "apeiMoselle" || client === "hombourgHaut" || client === "autres") {
+                setStep(2);
+                return
+
+            }
+        }
+
+        // Exemple de saut conditionnel depuis l'étape 3
+        if (step === 3) {
+            const poteau = methods.getValues("typeArret");
+            if (poteau === "nonObservable") {
+                setStep(5); // sauter directement à l'étape 6 (index 5)
+                return;
+            }
+        }
+
+        setStep((s) => s + 1); // sinon continue normalement
     };
 
-    const prevStep = () => setStep((s) => s - 1);
+
+    const prevStep = () => {
+        // Si tu veux gérer un retour conditionnel
+        if (step === 5) {
+            const poteau = methods.getValues("typeArret");
+            if (poteau === "nonObservable") {
+                setStep(3); // revenir directement à l’étape 3
+                return;
+            }
+        }
+
+        if (step === 2) {
+            const client = methods.getValues("client");
+            if (client === "apeiMoselle" || client === "hombourgHaut" || client === "autres") {
+                setStep(0);
+                return
+
+            }
+        }
+
+        setStep((s) => s - 1);
+    };
+
+
 
     const CurrentStep = steps[step].component;
 
     const progress = ((step + 1) / steps.length) * 100;
+
 
     return (
         <FormProvider {...methods}>
