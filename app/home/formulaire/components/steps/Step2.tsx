@@ -1,7 +1,6 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { InputsFormulaire } from "@/interface/inputFormulaire";
 import React from "react";
-import { useFormContext, Controller, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 
 const Step2: React.FC = () => {
@@ -11,20 +10,21 @@ const Step2: React.FC = () => {
     const client = useWatch({ control, name: "client" });
 
     return (
-        <div>
+        <div className="flex flex-col items-center justify-center w-full gap-6">
             {client === "casas" &&
-                <section>
-                    <h2>CASAS</h2>
-                    <label>
+                <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden">
+                    <h2 className="bg-[#ac504f] flex w-full items-center justify-items-start text-white text-xl h-[50px] text-center p-3.5">CASAS</h2>
+                    <label className="flex flex-row gap-1.5 p-3.5">
                         <p>Ligne</p>
-                        <p>*</p>
+                        <p className="text-red-600">*</p>
                     </label>
-                    <div className="flex flex-col gap-2 mt-2">
+                    <div className="flex flex-col gap-2 mt-2 p-3.5">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
                                 value="transavold"
                                 {...register("ligne", { required: "La ligne est obligatoire" })}
+                                className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                             />
                             <span>TRANSAVOLD</span>
                         </label>
@@ -33,6 +33,7 @@ const Step2: React.FC = () => {
                                 type="radio"
                                 value="transcool"
                                 {...register("ligne", { required: "La ligne obligatoire" })}
+                                className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                             />
                             <span>TRANSCOOL</span>
                         </label>
@@ -41,94 +42,103 @@ const Step2: React.FC = () => {
                 </section>
             }
             {client === "rgeFluo57" &&
-                <section>
+                <section className="flex flex-col w-full items-center justify-center">
                     <h2>RGE FLUO 57</h2>
-                    <label>
+                    <label className="flex flex-row gap-1.5">
                         <p>Type de Ligne</p>
-                        <p>*</p>
+                        <p className="text-red-600">*</p>
                     </label>
-                    <Controller
-                        name="typeLigne"
-                        control={control}
-                        render={({ field }) => (
-                            <RadioGroup
-                                className="flex items-center justify-center gap-3.5"
-                                onValueChange={field.onChange}
-                                value={field.value}
-                            >
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Lr" id="Lr" />
-                                    <label htmlFor="Lr">Régulières</label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Sa" id="Sa" />
-                                    <label htmlFor="Sa">Associées</label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Sc" id="Sc" />
-                                    <label htmlFor="Sc">Scolaires</label>
-                                </div>
-                            </RadioGroup>
-                        )}
-                    />
+                  <div className="flex flex-col gap-2 mt-2">
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="Lr"
+                                {...register("typeLigne", { required: "Le type de ligne est obligatoire" })}
+                                className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
+                        />
+                        <span>Ligne Régulière</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="Sa"
+                                {...register("typeLigne", { required: "Le type de ligne est obligatoire" })}
+                                className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
+                        />
+                        <span>Service Associé</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="Sc"
+                                {...register("typeLigne", { required: "Le type de ligne est obligatoire" })}
+                                className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
+                        />
+                        <span>Service Scolaire</span>
+                    </label>
+                </div>
+                {errors.typeLigne && <p className="text-red-600">{errors.typeLigne.message}</p>}
                 </section>
             }
             {client === "casc" &&
-                <section>
+                <section className="flex flex-col w-full items-center justify-center">
                     <h2>CASC</h2>
                     <label>
                         <p>Type deLigne</p>
                         <p>*</p>
                     </label>
-                    <Controller
-                        name="typeLigne"
-                        control={control}
-                        render={({ field }) => (
-                            <RadioGroup
-                                className="flex items-center justify-center gap-3.5"
-                                onValueChange={field.onChange}
-                                value={field.value}
-                            >
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Lr" id="Lr" />
-                                    <label htmlFor="Lr">Régulières</label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Sc" id="Sc" />
-                                    <label htmlFor="Sc">Scolaires</label>
-                                </div>
-                            </RadioGroup>
-                        )}
-                    />
+                    <div className="flex flex-col gap-2 mt-2">
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="Lr"
+                                {...register("typeLigne", { required: "Le type de ligne est obligatoire" })}
+                                className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
+                        />
+                        <span>Ligne Régulière</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="Sc"
+                                {...register("typeLigne", { required: "Le type de ligne est obligatoire" })}
+                                className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
+                        />
+                        <span>Service Scolaire</span>
+                    </label>
+                </div>
+                {errors.typeLigne && <p className="text-red-600">{errors.typeLigne.message}</p>}
                 </section>
             }
             {client === "forbus" &&
-                <section>
+                <section className="flex flex-col w-full items-center justify-center">
                     <h2>FORBUS</h2>
                     <label>
                         <p>Type deLigne</p>
                         <p>*</p>
                     </label>
-                    <Controller
-                        name="typeLigne"
-                        control={control}
-                        render={({ field }) => (
-                            <RadioGroup
-                                className="flex items-center justify-center gap-3.5"
-                                onValueChange={field.onChange}
-                                value={field.value}
-                            >
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Lu" id="Lu" />
-                                    <label htmlFor="Lr">Urbaines/Doublage Scolaires</label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Sc" id="Sc" />
-                                    <label htmlFor="Sc">Scolaires</label>
-                                </div>
-                            </RadioGroup>
-                        )}
-                    />
+                    <div className="flex flex-col gap-2 mt-2">
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="Lu"
+                                {...register("typeLigne", { required: "Le type de ligne est obligatoire" })}
+                                className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
+                        />
+                        <span>Ligne Urbaine / Doublage</span>
+                    </label>
+                
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="Sc"
+                                {...register("typeLigne", { required: "Le type de ligne est obligatoire" })}
+                                className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
+                        />
+                        <span>Service Scolaire</span>
+                    </label>
+                </div>
+                {errors.typeLigne && <p className="text-red-600">{errors.typeLigne.message}</p>}
                 </section>
             }
         </div>

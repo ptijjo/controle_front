@@ -12,6 +12,12 @@ import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Step4 from "./steps/Step4";
+import ConformiteArret from "./steps/ConformiteArret";
+
+import Vehicule from "./steps/Vehicule";
+import ObservationArret from "./steps/ObservationArret";
+import ObservationProprete from "./steps/ObservationProprete";
 
 type Step = {
     component: React.FC;
@@ -22,6 +28,11 @@ const steps: Step[] = [
     { component: Step1, fields: ["email", "date", "heurePrevue", "heureReelle", "meteo", "lieuControle", "client"] },
     { component: Step2, fields: ["ligne", "typeLigne"] },
     { component: Step3, fields: ["numeroLigne"] },
+    { component: Step4, fields: ["typeArret"] },
+    { component: ConformiteArret, fields: ["affichageHoraire", "presenceCadreAffichage", "zebra", "pleineVoie"] },
+    { component: ObservationArret, fields: [] },
+    { component: Vehicule, fields: [] },
+    { component: ObservationProprete, fields: ["observationProprete"] },
     { component: StepSignature, fields: ["chauffeurSignature", "controllerSignature"] },
 ];
 
@@ -58,7 +69,7 @@ export default function MultiStepForm() {
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)} className="flex-flex-col item-center justify-center w-full">
+            <form onSubmit={methods.handleSubmit(onSubmit)} className="flex-flex-colitem-center justify-center w-full bg-[#F7EEED]">
 
                 {/* 🔹 Indicateur d'étape */}
                 <div style={{ marginBottom: "10px" }}>
@@ -88,18 +99,18 @@ export default function MultiStepForm() {
                 <CurrentStep />
 
                 {/* 🔹 Boutons navigation */}
-                <div style={{ marginTop: "20px" }}>
+                <div className="flex flex-row items-center justify-between mt-[20px] p-3.5">
                     {step > 0 && (
                         <Button type="button" onClick={prevStep} className="bg-gray-950 text-white">
-                            ⬅️ Précédent
+                            Précédent
                         </Button>
                     )}
                     {step < steps.length - 1 ? (
                         <Button type="button" onClick={nextStep} className="bg-red-700 text-white">
-                            ➡️ Suivant
+                            Suivant
                         </Button>
                     ) : (
-                        <button type="submit">✅ Valider</button>
+                        <Button type="submit" className="bg-red-700 text-white">Valider</Button>
                     )}
                 </div>
             </form>

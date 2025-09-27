@@ -45,7 +45,7 @@ const LoginPage = () => {
     };
     
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-1.5 w-4/5 lg:w-1/3 items-center justify-center">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-1.5 w-4/5 md:w-1/2 lg:w-1/3 items-center justify-center">
             <Input
                 type="email"
                 placeholder="E-mail"
