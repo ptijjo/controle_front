@@ -15,7 +15,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
         const connected = async () => {
             try {
                 const res = await axios.get(Url.me, { withCredentials: true });
-                console.log("Utilisateur connecté :", res.data);
                 setUser(res.data);
             } catch (err) {
                 console.error(err);
@@ -24,11 +23,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
         };
         connected();
     }, [navigate])
-
-
-    console.log("user : ", user)
-
-
 
     return (
         <div className="flex flex-col flex-grow items-center justify-center w-full ">

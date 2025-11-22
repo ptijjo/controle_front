@@ -3,7 +3,7 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form';
 
 const PropreteInterieure = () => {
-  const { register } = useFormContext<InputsFormulaire>();
+  const { register, formState: { errors } } = useFormContext<InputsFormulaire>();
      return (
          <div className="flex flex-col items-center justify-center w-full gap-6 px-3.5">
              <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden">
@@ -25,8 +25,8 @@ const PropreteInterieure = () => {
                          <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="propre"
-                                 {...register("tableauDeBord", { required: "Tous les champs sont obligatoires" })}
+                                 value="Propre"
+                                 {...register("tableauBord", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
  
@@ -34,8 +34,8 @@ const PropreteInterieure = () => {
                          <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="moyen"
-                                 {...register("tableauDeBord", { required: "Tous les champs sont obligatoires" })}
+                                 value="Moyen"
+                                 {...register("tableauBord", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
  
@@ -43,12 +43,13 @@ const PropreteInterieure = () => {
                          <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="sale"
-                                 {...register("tableauDeBord", { required: "Tous les champs sont obligatoires" })}
+                                 value="Sale"
+                                 {...register("tableauBord", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
                          </label>
                      </div>
+                     {errors.tableauBord && <p className="text-red-600">{errors.tableauBord.message}</p>}
                  </div>
  
                  {/* Sol*/}
@@ -58,7 +59,7 @@ const PropreteInterieure = () => {
                          <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="propre"
+                                 value="Propre"
                                  {...register("sol", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
@@ -67,7 +68,7 @@ const PropreteInterieure = () => {
                          <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="moyen"
+                                 value="Moyen"
                                  {...register("sol", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
@@ -76,12 +77,13 @@ const PropreteInterieure = () => {
                              <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="sale"
+                                 value="Sale"
                                  {...register("sol", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
                          </label>
                      </div>
+                     {errors.sol && <p className="text-red-600">{errors.sol.message}</p>}
                  </div>
  
                  {/* Vitre*/}
@@ -91,7 +93,7 @@ const PropreteInterieure = () => {
                          <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="propre"
+                                 value="Propre"
                                  {...register("vitres", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
@@ -100,7 +102,7 @@ const PropreteInterieure = () => {
                          <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="moyen"
+                                 value="Moyen"
                                  {...register("vitres", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
@@ -109,12 +111,13 @@ const PropreteInterieure = () => {
                              <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="sale"
+                                 value="Sale"
                                  {...register("vitres", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
                          </label>
                      </div>
+                        {errors.vitres && <p className="text-red-600">{errors.vitres.message}</p>}
                  </div>
  
                  {/* sièges*/}
@@ -124,7 +127,7 @@ const PropreteInterieure = () => {
                          <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="conforme"
+                                 value="Propre"
                                  {...register("sieges", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
@@ -133,7 +136,7 @@ const PropreteInterieure = () => {
                          <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="moyen"
+                                 value="Moyen"
                                  {...register("sieges", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
@@ -142,12 +145,13 @@ const PropreteInterieure = () => {
                              <label className="flex items-center gap-2">
                              <input
                                  type="radio"
-                                 value="sale"
+                                 value="Sale"
                                  {...register("sieges", { required: "Tous les champs sont obligatoires" })}
                                  className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                              />
                          </label>
                      </div>
+                        {errors.sieges && <p className="text-red-600">{errors.sieges.message}</p>}
                  </div>
              </section>
 
@@ -158,7 +162,7 @@ const PropreteInterieure = () => {
                  </label>
                  <input
                         type="text"
-                        {...register("observationInterieur")}
+                        {...register("observationConditionsVehicule")}
                         placeholder='Votre réponse'
                         className="border-b border-b-gray-300 rounded p-2 text-base w-3/4 md:w-[95%] mb-10"
                     />

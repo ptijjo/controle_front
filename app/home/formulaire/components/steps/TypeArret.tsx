@@ -2,7 +2,7 @@ import { InputsFormulaire } from '@/interface/inputFormulaire';
 import React from 'react'
 import { useFormContext } from 'react-hook-form';
 
-const Step4 = () => {
+const TypeArret = () => {
     const {  register } = useFormContext<InputsFormulaire>();
 
 
@@ -19,7 +19,7 @@ const Step4 = () => {
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
-                            value="abrisBus"
+                            value="Abris bus"
                             {...register("typeArret", { required: "Le type d'arrêt est obligatoire" })}
                             className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                         />
@@ -28,7 +28,7 @@ const Step4 = () => {
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
-                            value="poteauArret"
+                            value="Poteau arrêt"
                             {...register("typeArret", { required: "Le type d'arrêt est obligatoire" })}
                             className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                         />
@@ -37,7 +37,7 @@ const Step4 = () => {
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
-                            value="nonObservable"
+                            value="Non observable"
                             {...register("typeArret", { required: "Le type d'arrêt est obligatoire" })}
                             className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                         />
@@ -50,4 +50,4 @@ const Step4 = () => {
     )
 }
 
-export default Step4
+export default TypeArret;

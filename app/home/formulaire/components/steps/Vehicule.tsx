@@ -16,11 +16,14 @@ const Vehicule = () => {
                     </label>
                     <input
                         type="number"
-                        {...register("numeroParc", { required: "Le numéro de parc est obligatoire" })}
+                        {...register("parc", {
+                            required: "Le numéro de parc est obligatoire",
+                            valueAsNumber: true
+                        })}
                         className="border-b border-b-gray-300 rounded p-2 text-base w-3/4 md:w-[95%] mb-10"
                     />
                 </div>
-                {errors.numeroParc && <p className="text-red-600">{errors.numeroParc.message}</p>}
+                {errors.parc && <p className="text-red-600">{errors.parc.message}</p>}
             </section>
 
             <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-md p-3.5 gap-6">
@@ -32,8 +35,8 @@ const Vehicule = () => {
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
-                            value="propre"
-                            {...register("propreteExterieure", { required: "La propreté extérieure est obligatoire" })}
+                            value="Propre"
+                            {...register("carosserie", { required: "La propreté extérieure est obligatoire" })}
                             className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                         />
                         <span>Propre</span>
@@ -41,8 +44,8 @@ const Vehicule = () => {
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
-                            value="moyen"
-                            {...register("propreteExterieure", { required: "La propreté extérieureest obligatoire" })}
+                            value="Moyen"
+                            {...register("carosserie", { required: "La propreté extérieureest obligatoire" })}
                             className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                         />
                         <span>Moyen</span>
@@ -50,14 +53,14 @@ const Vehicule = () => {
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
-                            value="sale"
-                            {...register("propreteExterieure", { required: "La propreté extérieure est obligatoire" })}
+                            value="Sale"
+                            {...register("carosserie", { required: "La propreté extérieure est obligatoire" })}
                             className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                         />
                         <span>Sale</span>
                     </label>
                 </div>
-                {errors.meteo && <p className="text-red-600">{errors.meteo.message}</p>}
+                {errors.carosserie && <p className="text-red-600">{errors.carosserie.message}</p>}
             </section>
         </div>
     )

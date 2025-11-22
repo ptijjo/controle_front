@@ -16,12 +16,12 @@ const ObservationProprete = () => {
                     </label>
                     <input
                         type="text"
-                        {...register("observationProprete", { required: "Le'observation est obligatoire" })}
+                        {...register("observationCar", { required: "Le'observation est obligatoire" })}
                         placeholder='Votre réponse'
                         className="border-b border-b-gray-300 rounded p-2 text-base w-3/4 md:w-[95%] mb-10"
                     />
                 </div>
-                {errors.observationProprete && <p className="text-red-600">{errors.observationProprete.message}</p>}
+                {errors.observationCar && <p className="text-red-600">{errors.observationCar.message}</p>}
             </section>
         </div>
     )
