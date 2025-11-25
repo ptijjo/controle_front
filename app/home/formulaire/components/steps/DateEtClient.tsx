@@ -28,7 +28,7 @@ const DateEtClient: React.FC = () => {
             {/* Heure arrivée contrôleur */}
             <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4  h-[100px] rounded-md p-3.5">
                 <label className="flex flex-row gap-1.5">
-                    <span>Heure arrivée contrôleur</span>
+                    <span>Heure réelle</span>
                     <span className="text-red-600">*</span>
                 </label>
                 <input
@@ -42,7 +42,7 @@ const DateEtClient: React.FC = () => {
             {/* Heure prévue arrivée véhicule */}
             <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4  h-[100px] rounded-md p-3.5">
                 <label className="flex flex-row gap-1.5">
-                    <span>Heure prévue arrivée du véhicule</span>
+                    <span>Heure d'arrivée du véhicule</span>
                     <span className="text-red-600">*</span>
                 </label>
                 <input

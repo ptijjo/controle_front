@@ -325,7 +325,7 @@ const NumeroLigne: React.FC = () => {
                 </section>}
 
             {/* HOMBOURG HAUT */}
-            {client === "hombourgHaut" &&
+            {(client === "hombourgHaut" ) &&
                 <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden">
                     <h2 className="bg-[#ac504f] flex w-full items-center justify-items-start text-white text-xl h-[50px] text-center p-3.5">HOMBOURG HAUT</h2>
                     <Label className="p-3.5">

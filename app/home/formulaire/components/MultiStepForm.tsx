@@ -32,7 +32,7 @@ type Step = {
 
 const steps: Step[] = [
     { component: DateEtClient, fields: ["date", "heurePrevue", "heureReelle", "lieuControle", "client"] },
-    { component: TypeLigne, fields: ["ligneCasas", "ligneForbus", "ligneRge", "ligneCasc"] },
+    { component: TypeLigne, fields: ["ligneCasas", "ligneForbus", "ligneRge", "ligneCasc", "ligneHH"] },
     { component: NumeroLigne, fields: ["numLigneForbusDoublage", "numLigneForbusCSCAF", "numLigneRgeLr", "numLigneRgeSa", "numLigneRgeSc", "numLigneCascLr", "numLigneCascSA", "numLigneCascSc", "numLigneTransavold", "numLigneTranschool"] },
     { component: TypeArret, fields: ["typeArret"] },
     { component: ConformiteArret, fields: ["zebra", "cadreAffichage", "ficheHoraire", "etatGeneral"] },
@@ -88,7 +88,7 @@ export default function MultiStepForm() {
         if (step === 0) {
             const client = methods.getValues("client");
 
-            if (client === "apeiMoselle" || client === "hombourgHaut" || client === "autres") {
+            if (client === "apeiMoselle" || client === "autres") {
                 setStep(2);
                 return
 
