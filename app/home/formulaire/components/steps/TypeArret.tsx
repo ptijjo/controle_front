@@ -3,33 +3,35 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form';
 
 const TypeArret = () => {
-    const {  register } = useFormContext<InputsFormulaire>();
+    const { register, formState: { errors } } = useFormContext<InputsFormulaire>();
 
 
     return (
         <div className="flex flex-col items-center justify-center w-full gap-6">
-          
-                <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden">
-                    <h2 className="bg-[#ac504f] flex w-full items-center justify-items-start text-white text-xl h-[50px] text-center p-3.5">DETAIL DU CONTRÔLE</h2>
-                    <label className="flex p-3.5 gap-2.5">
-                        <p>Type Arrêt</p>
-                        <p className="text-red-700">*</p>
-                    </label>
-                     <div className="flex flex-col gap-2 mt-2 p-3.5">
+
+            <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden">
+                <h2 className="bg-[#ac504f] flex w-full items-center justify-items-start text-white text-xl h-[50px] text-center p-3.5">DETAIL DU CONTRÔLE</h2>
+                <label className="flex p-3.5 gap-2.5">
+                    <p>Type Arrêt</p>
+                    <p className="text-red-700">*</p>
+                </label>
+                <div className="flex flex-col gap-2 mt-2 p-3.5">
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
                             value="Abris bus"
-                            {...register("typeArret", { required: "Le type d'arrêt est obligatoire" })}
+                            {...register("typeArret", { required: "Veuillez choisir un type d'arrêt" })}
                             className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                         />
+
                         <span>Abris bus</span>
                     </label>
+
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
                             value="Poteau arrêt"
-                            {...register("typeArret", { required: "Le type d'arrêt est obligatoire" })}
+                            {...register("typeArret", { required: "Veuillez choisir un type d'arrêt" })}
                             className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                         />
                         <span>Poteau arrêt</span>
@@ -38,14 +40,15 @@ const TypeArret = () => {
                         <input
                             type="radio"
                             value="Non observable"
-                            {...register("typeArret", { required: "Le type d'arrêt est obligatoire" })}
+                            {...register("typeArret", { required: "Veuillez choisir un type d'arrêt" })}
                             className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                         />
                         <span>Non observable</span>
                     </label>
                 </div>
-                </section>
-            
+            </section>
+            {errors.typeArret && <p className="text-red-600 text-xs md:text-sm px-3 md:px-3.5 pb-3 md:pb-3.5">{errors.typeArret.message}</p>}
+
         </div>
     )
 }

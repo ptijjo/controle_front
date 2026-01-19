@@ -62,6 +62,7 @@ export interface InputsFormulaire {
   billetiqueElectronique: "Conforme" | "Non conforme" | "Non observable";
   billetiqueManuelle: "Conforme" | "Non conforme" | "Non observable";
   fondDeCaisse: "Conforme" | "Non conforme" | "Non observable";
+  observationBilletique: string;
 
   // Conditions de transport
   tableauBord: "Propre" | "Moyen" | "Sale";

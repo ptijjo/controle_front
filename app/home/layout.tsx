@@ -17,7 +17,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 const res = await axios.get(Url.me, { withCredentials: true });
                 setUser(res.data);
             } catch (err) {
-                console.error(err);
                 navigate.push("/")
             }
         };

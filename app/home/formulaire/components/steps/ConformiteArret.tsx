@@ -3,7 +3,7 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form';
 
 const ConformiteArret = () => {
-    const { register } = useFormContext<InputsFormulaire>();
+    const { register, formState: { errors } } = useFormContext<InputsFormulaire>();
     return (
         <div className="flex flex-col items-center justify-center w-full gap-6 px-3.5">
             <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden">
@@ -12,15 +12,18 @@ const ConformiteArret = () => {
                     <p>Arrêt</p>
                     <p className="text-red-700">*</p>
                 </h3>
-                <div className='flex w-full'>
-                    <span className='relative left-[40%] md:left-[38%]'>Conforme</span>
-                    <span className='relative left-[50%] md:left-[60%]'>Non conforme</span>
+                <div className='flex w-[95%] md:w-[97%] mx-2.5 mb-3.5'>
+                    <div className='hidden md:block w-[30%]'></div>
+                    <div className='flex w-full md:w-[70%] text-xs md:text-sm lg:text-base items-center justify-around px-2 md:px-3.5'>
+                        <span>Conforme</span>
+                        <span>Non conforme</span>
+                    </div>
                 </div>
 
                 {/* Présence de zébra*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Présence Zébra au sol </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Présence Zébra au sol </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -40,12 +43,13 @@ const ConformiteArret = () => {
 
                         </label>
                     </div>
+                    {errors.zebra && <p className="text-red-600 text-xs md:text-sm px-3 md:px-3.5 pb-2">{errors.zebra.message}</p>}
                 </div>
 
                 {/* Etat général*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Etat général </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Etat général </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -65,12 +69,13 @@ const ConformiteArret = () => {
 
                         </label>
                     </div>
+                    {errors.etatGeneral && <p className="text-red-600 text-xs md:text-sm px-3 md:px-3.5 pb-2">{errors.etatGeneral.message}</p>}
                 </div>
 
                 {/* Présence cadre affichage*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Présence cadre affichage </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Présence cadre affichage </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -90,12 +95,13 @@ const ConformiteArret = () => {
 
                         </label>
                     </div>
+                    {errors.cadreAffichage && <p className="text-red-600 text-xs md:text-sm px-3 md:px-3.5 pb-2">{errors.cadreAffichage.message}</p>}
                 </div>
 
                 {/* Affichage horaires de ligne*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Affichage horaires de ligne </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Affichage horaires de ligne </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -115,6 +121,7 @@ const ConformiteArret = () => {
 
                         </label>
                     </div>
+                    {errors.ficheHoraire && <p className="text-red-600 text-xs md:text-sm px-3 md:px-3.5 pb-2">{errors.ficheHoraire.message}</p>}
                 </div>
 
 

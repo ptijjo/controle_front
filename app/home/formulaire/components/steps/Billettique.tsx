@@ -12,16 +12,19 @@ const Billettique = () => {
                     <p>Billetique</p>
                     <p className="text-red-700">*</p>
                 </h3>
-                <div className='flex w-full text-sm md:text-lg items-center mb-3.5'>
-                    <span className='relative left-[26%] md:left-[32%] md:w-1/3'>Conforme</span>
-                    <span className='relative left-[36%] md:left-[20%] w-2 md:w-1/3'>Non conforme</span>
-                    <span className='relative left-[56%] md:left-[10%] w-2 md:w-1/3'>Non observable</span>
+                <div className='flex w-[95%] md:w-[97%] mx-2.5 mb-3.5'>
+                    <div className='hidden md:block w-[30%]'></div>
+                    <div className='flex w-full md:w-[70%] text-xs md:text-sm lg:text-base items-center justify-around px-2 md:px-3.5'>
+                        <span>Conforme</span>
+                        <span>Non conforme</span>
+                        <span>Non observable</span>
+                    </div>
                 </div>
 
                 {/* Electronique*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5">Electronique</label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0">Electronique</label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -53,9 +56,9 @@ const Billettique = () => {
                 </div>
 
                 {/* Papier*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Papier</label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Papier</label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -87,9 +90,9 @@ const Billettique = () => {
                 </div>
 
                 {/* Fond de caisse*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Fond de caisse </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Fond de caisse </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -120,6 +123,20 @@ const Billettique = () => {
                     {errors.fondDeCaisse && <p className="text-red-600">{errors.fondDeCaisse.message}</p>}
                 </div>
 
+            </section>
+
+            <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden">
+                <h2 className="bg-[#ac504f] flex w-full items-center justify-items-start text-white text-lg md:text-xl h-[50px] text-center p-3 md:p-3.5">OBSERVATIONS BILLETTIQUE</h2>
+                <div className='flex flex-col items-start justify-center p-3 md:p-3.5 w-full gap-4 md:gap-6'>
+                    <label className="text-sm md:text-base">Observation de la billetique</label>
+                    <textarea
+                        {...register("observationBilletique", { required: "L'observation est obligatoire" })}
+                        placeholder='Votre réponse'
+                        rows={6}
+                        className="border border-gray-300 rounded p-2 text-sm md:text-base w-full mb-4 md:mb-10 min-h-[120px] md:min-h-[150px] resize-y"
+                    />
+                    {errors.observationBilletique && <p className="text-red-600">{errors.observationBilletique.message}</p>}
+                </div>
             </section>
 
         </div>

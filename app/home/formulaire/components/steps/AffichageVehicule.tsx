@@ -12,15 +12,18 @@ const AffichageVehicule = () => {
                     <p>Respect affichage</p>
                     <p className="text-red-700">*</p>
                 </h3>
-                <div className='flex w-full mb-3.5'>
-                    <span className='relative left-[35%] md:left-[38%]'>Conforme</span>
-                    <span className='relative left-[45%] md:left-[60%]'>Non conforme</span>
+                <div className='flex w-[95%] md:w-[97%] mx-2.5 mb-3.5'>
+                    <div className='hidden md:block w-[30%]'></div>
+                    <div className='flex w-full md:w-[70%] text-xs md:text-sm lg:text-base items-center justify-around px-2 md:px-3.5'>
+                        <span>Conforme</span>
+                        <span>Non conforme</span>
+                    </div>
                 </div>
 
                 {/* Affichage destination*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Affichage destination </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Affichage destination </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -45,9 +48,9 @@ const AffichageVehicule = () => {
                 </div>
 
                 {/* Affichage ligne*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Affichage ligne </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Affichage ligne </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -71,9 +74,9 @@ const AffichageVehicule = () => {
                 </div>
 
                 {/* Pictograme*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Pictogramme transport enfants </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Pictogramme transport enfants </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -97,9 +100,9 @@ const AffichageVehicule = () => {
                 </div>
 
                 {/* Grille tarifaire*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Affichage de la grille tarifaire </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Affichage de la grille tarifaire </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -123,9 +126,9 @@ const AffichageVehicule = () => {
                 </div>
 
                 {/* Présence réglement*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5'>
-                    <label className="flex w-[30%] p-1.5"> Présence du règlement de transport </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-2.5 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Présence du règlement de transport </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
@@ -149,9 +152,9 @@ const AffichageVehicule = () => {
                 </div>
 
                 {/* Dépliants horaires*/}
-                <div className='flex items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-10'>
-                    <label className="flex w-[30%] p-1.5"> Dépliants horaires disponibles </label>
-                    <div className="flex flex-row  items-center justify-around gap-3.5 mt-2 p-3.5 w-full">
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-center w-[95%] md:w-[97%] bg-[#f8f9fa] mx-2.5 mb-10 p-2 md:p-0'>
+                    <label className="flex w-full md:w-[30%] p-1.5 text-sm md:text-base mb-2 md:mb-0"> Dépliants horaires disponibles </label>
+                    <div className="flex flex-row items-center justify-around gap-2 md:gap-3.5 mt-0 md:mt-2 p-2 md:p-3.5 w-full">
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"

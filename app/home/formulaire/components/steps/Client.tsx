@@ -15,7 +15,7 @@ const Client = () => {
                 <label className='p-3.5'>Nombre de clients</label>
                 <input
                     type="number"
-                    {...register("nbreVoyageur")}
+                    {...register("nbreVoyageur", { required: "Le nombre de clients est obligatoire" })}
                     placeholder='Votre réponse'
                     className="border-b border-b-gray-300 rounded p-2 text-base w-3/4 md:w-[95%] mb-10"
                 />
@@ -26,7 +26,7 @@ const Client = () => {
                 <label>Nombre de fraudeurs</label>
                 <input
                     type="number"
-                    {...register("nbreVoyageurIrregulier")}
+                    {...register("nbreVoyageurIrregulier", { required: "Le nombre de fraudeurs est obligatoire" })}
                     placeholder='Votre réponse'
                     className="border-b border-b-gray-300 rounded p-2 text-base w-3/4 md:w-[95%] mb-10"
                 />

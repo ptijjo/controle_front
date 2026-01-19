@@ -9,16 +9,20 @@ const Home = () => {
 
 
     return (
-        <main className="flex flex-col flex-grow items-center justify-center w-full h-full">
-            <h1 className='text-5xl font-bold'>Contrôle</h1>
-            <div className='flex flex-row gap-[5%] items-center justify-center w-full h-full'>
-                <div className='flex flex-col items-center justify-center'>
-                    <Link href="/home/formulaire"> <FaWpforms className='text-8xl text-red-600 hover:text-red-500 hover:scale-105 hover:cursor-pointer' /></Link>
-                    <p>Nouveau Formulaire</p>
+        <main className="flex flex-col flex-grow items-center justify-center w-full min-h-screen px-4 py-8 gap-8 md:gap-12">
+            <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-center'>Contrôle</h1>
+            <div className='flex flex-col md:flex-row gap-8 md:gap-[5%] items-center justify-center w-full max-w-4xl'>
+                <div className='flex flex-col items-center justify-center gap-3 md:gap-4'>
+                    <Link href="/home/formulaire" className="transition-transform hover:scale-105"> 
+                        <FaWpforms className='text-6xl md:text-7xl lg:text-8xl text-red-600 hover:text-red-500 cursor-pointer' />
+                    </Link>
+                    <p className="text-sm md:text-base text-center">Nouveau Formulaire</p>
                 </div>
-                <div className='flex flex-col items-center justify-center'>
-                    <Link href={Url.download} target="_blank" rel="noopener noreferrer"><FaFileExcel className='text-8xl text-red-600 hover:text-red-500 hover:scale-105 hover:cursor-pointer' /></Link>
-                    <p>Extraction de donées</p>
+                <div className='flex flex-col items-center justify-center gap-3 md:gap-4'>
+                    <Link href={Url.download} target="_blank" rel="noopener noreferrer" className="transition-transform hover:scale-105">
+                        <FaFileExcel className='text-6xl md:text-7xl lg:text-8xl text-red-600 hover:text-red-500 cursor-pointer' />
+                    </Link>
+                    <p className="text-sm md:text-base text-center">Extraction de données</p>
                 </div>
             </div>
         </main>

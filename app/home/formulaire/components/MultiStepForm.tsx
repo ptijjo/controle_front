@@ -36,15 +36,15 @@ const steps: Step[] = [
     { component: NumeroLigne, fields: ["numLigneForbusDoublage", "numLigneForbusCSCAF", "numLigneRgeLr", "numLigneRgeSa", "numLigneRgeSc", "numLigneCascLr", "numLigneCascSA", "numLigneCascSc", "numLigneTransavold", "numLigneTranschool"] },
     { component: TypeArret, fields: ["typeArret"] },
     { component: ConformiteArret, fields: ["zebra", "cadreAffichage", "ficheHoraire", "etatGeneral"] },
-    { component: ObservationArret, fields: [] },
+    { component: ObservationArret, fields: ["observationArret"] },
     { component: Vehicule, fields: ["parc", "carosserie"] },
     { component: ObservationProprete, fields: ["observationCar"] },
     { component: AffichageVehicule, fields: ["affichageDestination", "depliantHoraire", "reglement", "tarifAffiche", "pictoEnfant", "affichageNumeroLigne"] },
-    { component: Billettique, fields: ["billetiqueElectronique", "billetiqueManuelle", "fondDeCaisse"] },
-    { component: PropreteInterieure, fields: ["sieges", "tableauBord", "sol", "vitres"] },
+    { component: Billettique, fields: ["billetiqueElectronique", "billetiqueManuelle", "fondDeCaisse", "observationBilletique"] },
+    { component: PropreteInterieure, fields: ["sieges", "tableauBord", "sol", "vitres", "observationConditionsVehicule"] },
     { component: Client, fields: ["nbreVoyageur", "nbreVoyageurIrregulier"] },
     { component: Meteo, fields: ["meteo"] },
-    { component: Chauffeur, fields: [] },
+    { component: Chauffeur, fields: ["nom", "prenom"] },
     { component: StepSignature, fields: ["chauffeurSignature", "controllerSignature"] },
 ];
 export default function MultiStepForm() {
@@ -60,12 +60,10 @@ export default function MultiStepForm() {
     const onSubmit = async (data: InputsFormulaire) => {
         setIsSubmitting(true);
         try {
-            console.log("✅ Formulaire soumis :", data);
             const response = await axios.post(Url.form, data, {
                 withCredentials: true
             })
 
-            console.log(response.data)
             if (response.data.message === "Formulaire crée avec succès") {
                 toast.success("Formulaire envoyé et validé !");
                 setTimeout(() => {
@@ -130,6 +128,12 @@ export default function MultiStepForm() {
         setStep((s) => s - 1);
     };
 
+    const handleCancel = () => {
+        if (window.confirm("Êtes-vous sûr de vouloir annuler le formulaire ? Toutes les données saisies seront perdues.")) {
+            navigate.push("/home");
+        }
+    };
+
 
 
     const CurrentStep = steps[step].component;
@@ -139,54 +143,54 @@ export default function MultiStepForm() {
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)} className="flex-flex-colitem-center justify-center w-full bg-[#F7EEED]">
+            <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col items-center justify-center w-full bg-[#F7EEED] min-h-screen py-4 md:py-6">
+
+                {/* 🔹 Bouton Annuler */}
+                <div className="w-full px-4 md:px-6 mb-4 flex justify-end">
+                    <Button
+                        type="button"
+                        onClick={handleCancel}
+                        className="bg-gray-500 hover:bg-gray-600 text-white text-sm md:text-base px-4 md:px-6 py-2 md:py-3"
+                        disabled={isSubmitting}
+                    >
+                        Annuler
+                    </Button>
+                </div>
 
                 {/* 🔹 Indicateur d'étape */}
-                <div style={{ marginBottom: "10px" }}>
-                    <p>Étape {step + 1} sur {steps.length}</p>
-                    <div
-                        style={{
-                            height: "8px",
-                            width: "100%",
-                            background: "#eee",
-                            borderRadius: "4px",
-                            overflow: "hidden",
-                            marginTop: "4px",
-                        }}
-                    >
+                <div className="w-full px-4 md:px-6 mb-4 md:mb-6">
+                    <p className="text-sm md:text-base text-center mb-2">Étape {step + 1} sur {steps.length}</p>
+                    <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
                         <div
-                            style={{
-                                height: "100%",
-                                width: `${progress}%`,
-                                background: "#4caf50",
-                                transition: "width 0.3s ease-in-out",
-                            }}
+                            className="h-full bg-green-500 transition-all duration-300 ease-in-out"
+                            style={{ width: `${progress}%` }}
                         />
                     </div>
                 </div>
 
-
-
                 {/*  Étape en cours */}
-                <CurrentStep />
+                <div className="w-full flex-1">
+                    <CurrentStep />
+                </div>
 
                 {/*  Boutons navigation */}
-                <div className="flex flex-row items-center justify-between mt-[20px] p-3.5">
+                <div className="flex flex-row items-center justify-between w-full px-4 md:px-6 mt-4 md:mt-6 gap-4">
                     {step > 0 && (
                         <Button
                             type="button"
                             onClick={prevStep}
-                            className="bg-gray-950 text-white"
+                            className="bg-gray-950 text-white text-sm md:text-base px-4 md:px-6 py-2 md:py-3 flex-1 md:flex-initial"
                             disabled={isSubmitting}
                         >
                             Précédent
                         </Button>
                     )}
+                    <div className={step > 0 ? "flex-1 md:flex-initial" : "flex-1"}></div>
                     {step < steps.length - 1 ? (
                         <Button
                             type="button"
                             onClick={nextStep}
-                            className="bg-red-700 text-white"
+                            className="bg-red-700 text-white text-sm md:text-base px-4 md:px-6 py-2 md:py-3 flex-1 md:flex-initial"
                             disabled={isSubmitting}
                         >
                             Suivant
@@ -194,7 +198,7 @@ export default function MultiStepForm() {
                     ) : (
                         <Button
                             type="submit"
-                            className="bg-red-700 text-white"
+                            className="bg-red-700 text-white text-sm md:text-base px-4 md:px-6 py-2 md:py-3 flex-1 md:flex-initial"
                             disabled={isSubmitting}
                         >
                             {isSubmitting ? "Envoi en cours..." : "Valider"}
