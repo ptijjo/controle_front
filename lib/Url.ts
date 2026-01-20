@@ -9,6 +9,7 @@ export const Url = {
 
     //User
     me:baseUrl + "/users_me",
+    inviteUser: baseUrl + "/users",
 
     //Formulaire
     form: baseUrl + "/forms",
