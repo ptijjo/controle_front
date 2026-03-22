@@ -14,6 +14,7 @@ const NumeroLigne: React.FC = () => {
     const ligneRge = useWatch({ control, name: "ligneRge" });
     const ligneCasc = useWatch({ control, name: "ligneCasc" });
     const ligneForbus = useWatch({ control, name: "ligneForbus" });
+    const carNonPasse = useWatch({ control, name: "carNonPasse" });
 
     // Réinitialiser les numéros de ligne quand le client ou le type de ligne change
     useEffect(() => {
@@ -33,6 +34,31 @@ const NumeroLigne: React.FC = () => {
     return (
 
         <div className="flex flex-col items-center justify-center w-full gap-6">
+            {(client === "apeiMoselle" || client === "autres") && carNonPasse && (
+                <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden border-2 border-amber-400">
+                    <h2 className="bg-[#ac504f] flex w-full items-center justify-items-start text-white text-xl h-[50px] text-center p-3.5">
+                        Ligne attendue (car non passé)
+                    </h2>
+                    <Label className="p-3.5">
+                        <p>Indiquez la ligne ou le service attendu</p>
+                        <p className="text-red-700">*</p>
+                    </Label>
+                    <div className="w-full p-3.5">
+                        <input
+                            type="text"
+                            placeholder="Ex. Ligne 12, TAD secteur…"
+                            className="border border-gray-300 rounded p-3 text-base w-full"
+                            {...register("ligneAttendueCarNonPasse", {
+                                required: "Précisez la ligne ou le service attendu",
+                            })}
+                        />
+                        {errors.ligneAttendueCarNonPasse && (
+                            <p className="text-red-600 mt-1">{errors.ligneAttendueCarNonPasse.message}</p>
+                        )}
+                    </div>
+                </section>
+            )}
+
             {/**CASAS TRANSAVOLD */}
             {(client === "casas" && ligneCasas === "transavold") &&
                 <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden">

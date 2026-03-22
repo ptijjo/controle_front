@@ -5,11 +5,12 @@ export const Url = {
     //Auth
     signUp: baseUrl + "/signup",
     logIn: baseUrl + "/login",
-    logOut: baseUrl + "logout",
+    logOut: baseUrl + "/logout",
 
     //User
     me:baseUrl + "/users_me",
     inviteUser: baseUrl + "/users",
+    users: baseUrl + "/users",
 
     //Formulaire
     form: baseUrl + "/forms",

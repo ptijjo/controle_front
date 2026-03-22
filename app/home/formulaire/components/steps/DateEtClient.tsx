@@ -1,9 +1,10 @@
 import { InputsFormulaire } from "@/interface/inputFormulaire";
 import React, { useEffect } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 const DateEtClient: React.FC = () => {
-    const { register, formState: { errors }, setValue } = useFormContext<InputsFormulaire>();
+    const { register, control, getValues, formState: { errors }, setValue, clearErrors } = useFormContext<InputsFormulaire>();
+    const carNonPasse = useWatch({ control, name: "carNonPasse" });
 
     // Définir la date du jour automatiquement
     useEffect(() => {
@@ -12,9 +13,36 @@ const DateEtClient: React.FC = () => {
         setValue("date", formattedDate as any);
     }, [setValue]);
 
+    useEffect(() => {
+        if (carNonPasse) {
+            setValue("heureReelle", "", { shouldValidate: true });
+            clearErrors("heureReelle");
+        }
+    }, [carNonPasse, setValue, clearErrors]);
+
     return (
         <div className="flex flex-col items-center justify-center w-full gap-4 md:gap-6 px-4">
             <h2 className="text-xl md:text-2xl font-bold text-center">Controle de Qualité</h2>
+
+            {/* Car non passé — envoi direct sans suite du formulaire ni signatures */}
+            <section className="flex flex-col items-start justify-center w-full md:w-3/4 rounded-md border-2 border-amber-500 bg-amber-50 p-3 md:p-4 gap-2">
+                <label className="flex cursor-pointer flex-row items-start gap-3 text-sm md:text-base">
+                    <input
+                        type="checkbox"
+                        className="mt-1 size-4 shrink-0 accent-red-700"
+                        {...register("carNonPasse")}
+                    />
+                    <span>
+                        <span className="font-semibold text-amber-900">Le car n&apos;est pas passé</span>
+                        <span className="mt-1 block text-xs font-normal text-amber-900/90 md:text-sm">
+                            Vous devrez ensuite indiquer le type de ligne puis le numéro de ligne attendu ; le signalement
+                            est alors envoyé sans la suite du contrôle ni les signatures. Pour APEI Moselle ou Autres, la
+                            ligne attendue est saisie à l&apos;étape « numéro de ligne » (sans étape type de ligne).
+                        </span>
+                    </span>
+                </label>
+            </section>
+
             {/* Date */}
             <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 min-h-[90px] md:min-h-[100px] rounded-md p-3 md:p-3.5 gap-2">
                 <label className="flex flex-row gap-1.5 text-sm md:text-base">
@@ -34,16 +62,33 @@ const DateEtClient: React.FC = () => {
                 {errors.date && <p className="text-red-600 text-xs md:text-sm">{errors.date.message}</p>}
             </section>
 
-            {/* Heure arrivée contrôleur */}
-            <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 min-h-[90px] md:min-h-[100px] rounded-md p-3 md:p-3.5 gap-2">
+            {/* Heure arrivée véhicule — non applicable si le car n'est pas passé */}
+            <section
+                className={`flex flex-col items-start justify-center bg-white w-full md:w-3/4 min-h-[90px] md:min-h-[100px] rounded-md p-3 md:p-3.5 gap-2 transition-opacity ${carNonPasse ? "opacity-75" : ""}`}
+            >
                 <label className="flex flex-row gap-1.5 text-sm md:text-base">
-                    <span>Heure d'arrivée du véhicule</span>
-                    <span className="text-red-600">*</span>
+                    <span>Heure d&apos;arrivée du véhicule</span>
+                    {!carNonPasse && <span className="text-red-600">*</span>}
+                    {carNonPasse && (
+                        <span className="text-xs font-normal text-gray-500">(non applicable)</span>
+                    )}
                 </label>
                 <input
                     type="time"
-                    {...register("heureReelle", { required: "L'heure d'arrivée du contrôleur est obligatoire" })}
-                    className="border-b border-b-gray-300 rounded p-2 text-sm md:text-base w-full sm:w-[50%] md:w-1/4 lg:w-[13%]"
+                    {...register("heureReelle", {
+                        validate: (value) =>
+                            getValues("carNonPasse")
+                                ? true
+                                : value
+                                  ? true
+                                  : "L'heure d'arrivée du véhicule est obligatoire",
+                    })}
+                    disabled={!!carNonPasse}
+                    className={`border-b border-b-gray-300 rounded p-2 text-sm md:text-base w-full sm:w-[50%] md:w-1/4 lg:w-[13%] ${
+                        carNonPasse
+                            ? "cursor-not-allowed bg-gray-200 text-gray-500"
+                            : ""
+                    }`}
                 />
                 {errors.heureReelle && <p className="text-red-600 text-xs md:text-sm">{errors.heureReelle.message}</p>}
             </section>

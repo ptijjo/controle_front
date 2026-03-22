@@ -1,6 +1,11 @@
 import NumeroLigne from '../app/home/formulaire/components/steps/NumeroLigne';
 
 export interface InputsFormulaire {
+  /** Si true : envoi direct à l’étape 1, sans contrôle véhicule ni signatures */
+  carNonPasse?: boolean;
+  /** Ligne / numéro attendu (APEI ou Autres + car non passé, pas de liste déroulante) */
+  ligneAttendueCarNonPasse?: string;
+
   // Date de soumission du formulaire
   heurePrevue: string;
   heureReelle: string;

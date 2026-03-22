@@ -24,6 +24,7 @@ import NumeroLigne from "./steps/NumeroLigne";
 import TypeArret from "./steps/TypeArret";
 import Chauffeur from "./steps/Chauffeur";
 import Meteo from "./steps/Meteo";
+import { buildCarNonPassePayload } from "@/lib/buildCarNonPassePayload";
 
 type Step = {
     component: React.FC;
@@ -31,9 +32,9 @@ type Step = {
 };
 
 const steps: Step[] = [
-    { component: DateEtClient, fields: ["date", "heurePrevue", "heureReelle", "lieuControle", "client"] },
+    { component: DateEtClient, fields: ["date", "heurePrevue", "heureReelle", "lieuControle", "client", "carNonPasse"] },
     { component: TypeLigne, fields: ["ligneCasas", "ligneForbus", "ligneRge", "ligneCasc", "ligneHH"] },
-    { component: NumeroLigne, fields: ["numLigneForbusDoublage", "numLigneForbusCSCAF", "numLigneRgeLr", "numLigneRgeSa", "numLigneRgeSc", "numLigneCascLr", "numLigneCascSA", "numLigneCascSc", "numLigneTransavold", "numLigneTranschool"] },
+    { component: NumeroLigne, fields: ["numLigneForbusDoublage", "numLigneForbusCSCAF", "numLigneRgeLr", "numLigneRgeSa", "numLigneRgeSc", "numLigneCascLr", "numLigneCascSA", "numLigneCascSc", "numLigneTransavold", "numLigneTranschool", "numLigneHH"] },
     { component: TypeArret, fields: ["typeArret"] },
     { component: ConformiteArret, fields: ["zebra", "cadreAffichage", "ficheHoraire", "etatGeneral"] },
     { component: ObservationArret, fields: ["observationArret"] },
@@ -50,8 +51,13 @@ const steps: Step[] = [
 export default function MultiStepForm() {
     const navigate = useRouter();
     const methods = useForm<InputsFormulaire>({
-        mode: "onChange"
+        mode: "onChange",
+        defaultValues: {
+            carNonPasse: false,
+        },
     });
+
+    const carNonPasse = methods.watch("carNonPasse");
 
 
     const [step, setStep] = useState(0);
@@ -65,7 +71,11 @@ export default function MultiStepForm() {
             })
 
             if (response.data.message === "Formulaire crée avec succès") {
-                toast.success("Formulaire envoyé et validé !");
+                toast.success(
+                    data.carNonPasse
+                        ? "Signalement « car non passé » envoyé !"
+                        : "Formulaire envoyé et validé !"
+                );
                 setTimeout(() => {
                     navigate.push("/home")
                 }, 2000);
@@ -79,18 +89,74 @@ export default function MultiStepForm() {
         }
     };
 
+    const submitCarNonPasse = async () => {
+        const payload = buildCarNonPassePayload(
+            methods.getValues() as Parameters<typeof buildCarNonPassePayload>[0]
+        );
+
+        setIsSubmitting(true);
+        try {
+            const response = await axios.post(Url.form, payload, {
+                withCredentials: true,
+            });
+            if (response.data.message === "Formulaire crée avec succès") {
+                toast.success("Signalement « car non passé » envoyé !");
+                setTimeout(() => {
+                    navigate.push("/home");
+                }, 2000);
+            } else {
+                toast.error("Erreur lors de l'envoi du formulaire.");
+            }
+        } catch {
+            toast.error("Erreur lors de l'envoi du formulaire.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     const nextStep = async () => {
-        const isValid = await methods.trigger(steps[step].fields);
+        let fieldsToValidate: (keyof InputsFormulaire)[] = steps[step].fields;
+        if (step === 0 && methods.getValues("carNonPasse")) {
+            fieldsToValidate = fieldsToValidate.filter((f) => f !== "heureReelle");
+        }
+        if (step === 2 && methods.getValues("carNonPasse")) {
+            const c = methods.getValues("client");
+            if (c === "apeiMoselle" || c === "autres") {
+                fieldsToValidate = [...steps[2].fields, "ligneAttendueCarNonPasse"];
+            }
+        }
+
+        const isValid = await methods.trigger(fieldsToValidate);
         if (!isValid) return; // arrête si l'étape actuelle n'est pas valide
 
         if (step === 0) {
             const client = methods.getValues("client");
+            const carNp = methods.getValues("carNonPasse");
+
+            if (carNp) {
+                if (client === "apeiMoselle" || client === "autres") {
+                    setStep(2);
+                    return;
+                }
+                setStep(1);
+                return;
+            }
 
             if (client === "apeiMoselle" || client === "autres") {
                 setStep(2);
                 return
 
             }
+        }
+
+        if (step === 1 && methods.getValues("carNonPasse")) {
+            setStep(2);
+            return;
+        }
+
+        if (step === 2 && methods.getValues("carNonPasse")) {
+            await submitCarNonPasse();
+            return;
         }
 
         // Exemple de saut conditionnel depuis l'étape 3
@@ -118,11 +184,25 @@ export default function MultiStepForm() {
 
         if (step === 2) {
             const client = methods.getValues("client");
+            const carNp = methods.getValues("carNonPasse");
+            if (carNp) {
+                if (client === "apeiMoselle" || client === "autres") {
+                    setStep(0);
+                    return;
+                }
+                setStep(1);
+                return;
+            }
             if (client === "apeiMoselle" || client === "hombourgHaut" || client === "autres") {
                 setStep(0);
                 return
 
             }
+        }
+
+        if (step === 1 && methods.getValues("carNonPasse")) {
+            setStep(0);
+            return;
         }
 
         setStep((s) => s - 1);
@@ -193,7 +273,9 @@ export default function MultiStepForm() {
                             className="bg-red-700 text-white text-sm md:text-base px-4 md:px-6 py-2 md:py-3 flex-1 md:flex-initial"
                             disabled={isSubmitting}
                         >
-                            Suivant
+                            {carNonPasse && step === 2
+                                ? "Envoyer (car non passé)"
+                                : "Suivant"}
                         </Button>
                     ) : (
                         <Button
