@@ -39,18 +39,11 @@ function getHttpApiErrorMessage(
   return fallback
 }
 
-type InvitationVerifyResponse = {
-  data?: { email?: string }
-  email?: string
-}
-
-function pickInvitationEmail(payload: unknown): string | null {
-  if (!payload || typeof payload !== "object") return null
-  const p = payload as InvitationVerifyResponse
-  const fromData = p.data?.email
-  if (typeof fromData === "string" && fromData.trim()) return fromData.trim()
-  if (typeof p.email === "string" && p.email.trim()) return p.email.trim()
-  return null
+/** Vérifie la forme de la réponse sans lire ni conserver d’e-mail. */
+function isInvitationVerifyResponseOk(payload: unknown): boolean {
+  if (!payload || typeof payload !== "object") return false
+  const data = (payload as { data?: unknown }).data
+  return typeof data === "object" && data !== null
 }
 
 const Enregistrement = () => {
@@ -62,7 +55,6 @@ const Enregistrement = () => {
   const [inviteStatus, setInviteStatus] = useState<
     "idle" | "checking" | "valid" | "invalid"
   >("idle")
-  const [invitedEmail, setInvitedEmail] = useState<string | null>(null)
   const [inviteError, setInviteError] = useState<string | null>(null)
 
   const {
@@ -95,23 +87,20 @@ const Enregistrement = () => {
     let cancelled = false
     setInviteStatus("checking")
     setInviteError(null)
-    setInvitedEmail(null)
 
     const verify = async () => {
       try {
-        const res = await axios.get<InvitationVerifyResponse>(
+        const res = await axios.get(
           `${Url.signUpInvitationVerify}/${encodeURIComponent(token)}`,
           { withCredentials: true }
         )
         if (cancelled) return
-        const email = pickInvitationEmail(res.data)
-        if (email) {
-          setInvitedEmail(email)
+        if (isInvitationVerifyResponseOk(res.data)) {
           setInviteStatus("valid")
         } else {
           setInviteStatus("invalid")
           setInviteError(
-            "Réponse serveur inattendue : email d’invitation introuvable."
+            "Réponse serveur inattendue après vérification du lien."
           )
         }
       } catch (error) {
@@ -229,10 +218,9 @@ const Enregistrement = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-6 w-full max-w-md bg-white p-6 rounded-lg shadow-lg"
       >
-        <div className="rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700">
-          <span className="font-medium text-gray-900">Compte invité : </span>
-          <span className="break-all">{invitedEmail}</span>
-        </div>
+        <p className="text-sm text-gray-600">
+          Complétez les champs ci-dessous pour créer votre compte.
+        </p>
         <div className="flex flex-col gap-2">
           <label htmlFor="nom" className="text-sm font-medium text-gray-700">
             Nom *
