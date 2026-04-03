@@ -36,7 +36,7 @@ const ConformiteArret = () => {
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
-                                value="Non Conforme"
+                                value="Non conforme"
                                 {...register("zebra", { required: "Tous les champs sont obligatoires" })}
                                 className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                             />
@@ -62,7 +62,7 @@ const ConformiteArret = () => {
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
-                                value="Non Conforme"
+                                value="Non conforme"
                                 {...register("etatGeneral", { required: "Tous les champs sont obligatoires" })}
                                 className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                             />
@@ -88,7 +88,7 @@ const ConformiteArret = () => {
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
-                                value="Non Conforme"
+                                value="Non conforme"
                                 {...register("cadreAffichage", { required: "Tous les champs sont obligatoires" })}
                                 className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                             />
@@ -114,7 +114,7 @@ const ConformiteArret = () => {
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
-                                value="Non Conforme"
+                                value="Non conforme"
                                 {...register("ficheHoraire", { required: "Tous les champs sont obligatoires" })}
                                 className='w-6 h-6 text-red-600 border-gray-300 focus:ring-red-500'
                             />
