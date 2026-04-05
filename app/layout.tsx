@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import PwaProvider from "./components/PwaProvider";
 
-const APP_NAME = "Formulaire Trandev";
-const APP_DESCRIPTION = "Formulaire de contrôle qualité";
+const APP_NAME = "Contrôle";
+const APP_DESCRIPTION = "Application de contrôle qualité";
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,

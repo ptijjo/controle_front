@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Formulaire Trandev",
-    short_name: "Trandev",
-    description: "Formulaire de contrôle qualité",
+    name: "Contrôle qualité",
+    short_name: "Contrôle",
+    description: "Application de contrôle qualité",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
