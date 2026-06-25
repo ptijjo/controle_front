@@ -161,7 +161,7 @@ const PropreteInterieure = () => {
 
             <section className="flex flex-col items-start justify-center bg-white w-full md:w-3/4 rounded-lg overflow-hidden p-3 md:p-3.5">
                 <label className="flex flex-row gap-1.5 text-sm md:text-base mb-2">
-                    <span>Observations de l'état général intérieur du véhicule</span>
+                    <span>Observations de l&apos;état général intérieur du véhicule</span>
                     <span className="text-red-600">*</span>
                 </label>
                 <textarea

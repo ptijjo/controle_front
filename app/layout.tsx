@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import PwaProvider from "./components/PwaProvider";
+import Providers from "./providers";
 
 const APP_NAME = "Contrôle";
 const APP_DESCRIPTION = "Application de contrôle qualité";
@@ -49,7 +50,9 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className="mx-auto h-dvh">
-        <PwaProvider>{children}</PwaProvider>
+        <Providers>
+          <PwaProvider>{children}</PwaProvider>
+        </Providers>
       </body>
     </html>
   );

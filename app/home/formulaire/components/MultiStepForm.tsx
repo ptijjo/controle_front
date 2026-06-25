@@ -1,10 +1,10 @@
 "use client"
 import React, { useState } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, useWatch } from "react-hook-form";
 import { InputsFormulaire } from "@/interface/inputFormulaire";
 import StepSignature from "./steps/StepSignature";
-import axios from "axios";
-import { Url } from "@/lib/Url";
+import { api } from "@/lib/api";
+import { paths } from "@/lib/paths";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
@@ -25,6 +25,9 @@ import TypeArret from "./steps/TypeArret";
 import Chauffeur from "./steps/Chauffeur";
 import Meteo from "./steps/Meteo";
 import { buildCarNonPassePayload } from "@/lib/buildCarNonPassePayload";
+import { localStartOfToday } from "@/lib/form-date";
+import { getApiErrorMessage } from "@/lib/api-error";
+import { formulaireSubmitSchema } from "@/lib/schemas/formulaire";
 
 type Step = {
     component: React.FC;
@@ -54,21 +57,30 @@ export default function MultiStepForm() {
         mode: "onChange",
         defaultValues: {
             carNonPasse: false,
+            date: localStartOfToday(),
         },
     });
 
-    const carNonPasse = methods.watch("carNonPasse");
+    const carNonPasse = useWatch({
+        control: methods.control,
+        name: "carNonPasse",
+    });
 
 
     const [step, setStep] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const onSubmit = async (data: InputsFormulaire) => {
+        const parsed = formulaireSubmitSchema.safeParse(data);
+        if (!parsed.success) {
+            const first = parsed.error.issues[0];
+            toast.error(first?.message ?? "Vérifiez les champs du formulaire.");
+            return;
+        }
+
         setIsSubmitting(true);
         try {
-            const response = await axios.post(Url.form, data, {
-                withCredentials: true
-            })
+            const response = await api.post(paths.formulaire, data);
 
             if (response.data.message === "Formulaire crée avec succès") {
                 toast.success(
@@ -80,10 +92,12 @@ export default function MultiStepForm() {
                     navigate.push("/home")
                 }, 2000);
             } else {
-                toast.error("Erreur lors de l'envoi du formulaire.");
+                toast.error("La réponse du serveur est inattendue. Réessayez ou contactez le support.");
             }
         } catch (error) {
-            toast.error("Erreur lors de l'envoi du formulaire.");
+            toast.error(
+                getApiErrorMessage(error, "Erreur lors de l'envoi du formulaire."),
+            );
         } finally {
             setIsSubmitting(false);
         }
@@ -96,9 +110,7 @@ export default function MultiStepForm() {
 
         setIsSubmitting(true);
         try {
-            const response = await axios.post(Url.form, payload, {
-                withCredentials: true,
-            });
+            const response = await api.post(paths.formulaire, payload);
             if (response.data.message === "Formulaire crée avec succès") {
                 toast.success("Signalement « car non passé » envoyé !");
                 setTimeout(() => {
@@ -107,8 +119,10 @@ export default function MultiStepForm() {
             } else {
                 toast.error("Erreur lors de l'envoi du formulaire.");
             }
-        } catch {
-            toast.error("Erreur lors de l'envoi du formulaire.");
+        } catch (error) {
+            toast.error(
+                getApiErrorMessage(error, "Erreur lors de l'envoi du signalement."),
+            );
         } finally {
             setIsSubmitting(false);
         }

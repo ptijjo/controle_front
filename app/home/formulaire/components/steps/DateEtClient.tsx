@@ -1,17 +1,21 @@
 import { InputsFormulaire } from "@/interface/inputFormulaire";
 import React, { useEffect } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { dateToYMD, localStartOfToday, ymdToLocalDate } from "@/lib/form-date";
 
 const DateEtClient: React.FC = () => {
     const { register, control, getValues, formState: { errors }, setValue, clearErrors } = useFormContext<InputsFormulaire>();
     const carNonPasse = useWatch({ control, name: "carNonPasse" });
 
-    // Définir la date du jour automatiquement
     useEffect(() => {
-        const today = new Date();
-        const formattedDate = today.toISOString().split('T')[0]; // Format YYYY-MM-DD
-        setValue("date", formattedDate as any);
-    }, [setValue]);
+        const current = getValues("date");
+        if (!(current instanceof Date) || Number.isNaN(current.getTime())) {
+            setValue("date", localStartOfToday(), {
+                shouldValidate: true,
+                shouldDirty: false,
+            });
+        }
+    }, [getValues, setValue]);
 
     useEffect(() => {
         if (carNonPasse) {
@@ -49,15 +53,32 @@ const DateEtClient: React.FC = () => {
                     <span>Date du contrôle ?</span>
                     <span className="text-red-600">*</span>
                 </label>
-                <input
-                    type="date"
-                    {...register("date", {
-                        required: "La date est obligatoire",
-                        valueAsDate: true
-                    })}
-                    defaultValue={new Date().toISOString().split('T')[0]}
-                    readOnly
-                    className="border-b border-b-gray-300 rounded p-2 text-sm md:text-base w-full sm:w-[60%] md:w-[40%] lg:w-1/5 bg-gray-100 cursor-not-allowed"
+                <Controller
+                    name="date"
+                    control={control}
+                    rules={{ required: "La date est obligatoire" }}
+                    render={({ field }) => {
+                        const d =
+                            field.value instanceof Date &&
+                            !Number.isNaN(field.value.getTime())
+                                ? field.value
+                                : localStartOfToday();
+                        return (
+                            <input
+                                type="date"
+                                readOnly
+                                className="border-b border-b-gray-300 rounded p-2 text-sm md:text-base w-full sm:w-[60%] md:w-[40%] lg:w-1/5 bg-gray-100 cursor-not-allowed"
+                                name={field.name}
+                                ref={field.ref}
+                                onBlur={field.onBlur}
+                                value={dateToYMD(d)}
+                                onChange={(e) => {
+                                    const v = e.target.value;
+                                    if (v) field.onChange(ymdToLocalDate(v));
+                                }}
+                            />
+                        );
+                    }}
                 />
                 {errors.date && <p className="text-red-600 text-xs md:text-sm">{errors.date.message}</p>}
             </section>

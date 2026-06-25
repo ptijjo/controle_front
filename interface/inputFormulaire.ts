@@ -1,5 +1,3 @@
-import NumeroLigne from '../app/home/formulaire/components/steps/NumeroLigne';
-
 export interface InputsFormulaire {
   /** Si true : envoi direct à l’étape 1, sans contrôle véhicule ni signatures */
   carNonPasse?: boolean;

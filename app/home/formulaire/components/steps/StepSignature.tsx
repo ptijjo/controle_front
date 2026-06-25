@@ -24,10 +24,18 @@ const StepSignature = () => {
 
                 {/* Champs cachés pour stocker les signatures */}
                 <input type="hidden" {...register("chauffeurSignature", { required: "La signature du chauffeur est obligatoire" })} />
-                {errors.chauffeurSignature && <p style={{ color: "red" }}>{errors.chauffeurSignature.message}</p>}
+                {errors.chauffeurSignature && (
+                    <p className="text-sm text-red-600" role="alert">
+                        {errors.chauffeurSignature.message}
+                    </p>
+                )}
 
                 <input type="hidden" {...register("controllerSignature", { required: "La signature du contrôleur est obligatoire" })} />
-                {errors.controllerSignature && <p style={{ color: "red" }}>{errors.controllerSignature.message}</p>}
+                {errors.controllerSignature && (
+                    <p className="text-sm text-red-600" role="alert">
+                        {errors.controllerSignature.message}
+                    </p>
+                )}
 
             </section>
         </div>

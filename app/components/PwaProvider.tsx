@@ -1,16 +1,11 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
-
-const SW_URL = "/serwist/sw.js";
+import type { ReactNode } from "react";
+import { useEffect } from "react";
 
 export default function PwaProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
-    if (!("serviceWorker" in navigator)) return;
-    void navigator.serviceWorker.register(SW_URL, {
-      scope: "/",
-      type: "module",
-    });
+    /* Service worker désactivé : ajoutez Serwist si besoin hors-ligne. */
   }, []);
 
   return <>{children}</>;
