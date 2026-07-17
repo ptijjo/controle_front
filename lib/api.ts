@@ -5,12 +5,11 @@ import axios, {
 import { handleSessionExpired } from "./auth-session";
 import {
   getAccessToken,
-  getRefreshToken,
   updateSessionFromRefresh,
   type StoredUser,
 } from "./auth-storage";
 
-function apiBaseUrl(): string {
+export function apiBaseUrl(): string {
   const raw =
     process.env.NEXT_PUBLIC_API_URL?.trim() || "http://localhost:8585";
   return raw.replace(/\/$/, "");
@@ -42,20 +41,15 @@ function shouldSkipRefreshRetry(url: string | undefined): boolean {
 
 let refreshPromise: Promise<string | null> | null = null;
 
+/** Refresh via cookie httpOnly uniquement (pas de token en sessionStorage). */
 async function refreshAccessToken(): Promise<string | null> {
-  const refresh = getRefreshToken();
-  if (!refresh) {
-    handleSessionExpired();
-    return null;
-  }
   try {
     const { data } = await axios.post<{
       access_token: string;
-      refresh_token: string;
       user?: StoredUser;
     }>(
       `${apiBaseUrl()}/auth/refresh`,
-      { refresh_token: refresh },
+      {},
       { withCredentials: true, headers: { "Content-Type": "application/json" } },
     );
     updateSessionFromRefresh(data);

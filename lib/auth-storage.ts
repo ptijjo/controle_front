@@ -1,6 +1,6 @@
 const ACCESS = "controle_access_token";
-const REFRESH = "controle_refresh_token";
 const USER = "controle_user";
+const SESSION_FLAG = "controle_session";
 
 export type StoredUser = {
   id: string;
@@ -14,14 +14,18 @@ function isBrowser(): boolean {
   return typeof window !== "undefined" && typeof sessionStorage !== "undefined";
 }
 
+function setSessionFlag(on: boolean): void {
+  if (typeof document === "undefined") return;
+  if (on) {
+    document.cookie = `${SESSION_FLAG}=1; path=/; SameSite=Lax`;
+  } else {
+    document.cookie = `${SESSION_FLAG}=; path=/; Max-Age=0; SameSite=Lax`;
+  }
+}
+
 export function getAccessToken(): string | null {
   if (!isBrowser()) return null;
   return sessionStorage.getItem(ACCESS);
-}
-
-export function getRefreshToken(): string | null {
-  if (!isBrowser()) return null;
-  return sessionStorage.getItem(REFRESH);
 }
 
 export function getStoredUser(): StoredUser | null {
@@ -35,33 +39,31 @@ export function getStoredUser(): StoredUser | null {
   }
 }
 
-export function setAuthSession(
-  access: string,
-  refresh: string,
-  user: StoredUser,
-): void {
+/** Access en sessionStorage uniquement ; refresh = cookie httpOnly API. */
+export function setAuthSession(access: string, user: StoredUser): void {
   if (!isBrowser()) return;
   sessionStorage.setItem(ACCESS, access);
-  sessionStorage.setItem(REFRESH, refresh);
   sessionStorage.setItem(USER, JSON.stringify(user));
+  setSessionFlag(true);
 }
 
 export function updateSessionFromRefresh(payload: {
   access_token: string;
-  refresh_token: string;
   user?: StoredUser;
 }): void {
   if (!isBrowser()) return;
   sessionStorage.setItem(ACCESS, payload.access_token);
-  sessionStorage.setItem(REFRESH, payload.refresh_token);
   if (payload.user) {
     sessionStorage.setItem(USER, JSON.stringify(payload.user));
   }
+  setSessionFlag(true);
 }
 
 export function clearAuthSession(): void {
   if (!isBrowser()) return;
   sessionStorage.removeItem(ACCESS);
-  sessionStorage.removeItem(REFRESH);
   sessionStorage.removeItem(USER);
+  // legacy cleanup
+  sessionStorage.removeItem("controle_refresh_token");
+  setSessionFlag(false);
 }

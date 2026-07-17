@@ -7,8 +7,7 @@ import { paths } from "@/lib/paths";
 import { api } from "@/lib/api";
 import { getApiErrorMessage } from "@/lib/api-error";
 import { inviteEmailSchema, type InviteEmailInput } from "@/lib/schemas/auth";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -102,8 +101,6 @@ export default function AjouterUtilisateurInner() {
           </Button>
         </div>
       </form>
-
-      <ToastContainer autoClose={2500} position="bottom-center" />
     </main>
   );
 }

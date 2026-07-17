@@ -10,8 +10,7 @@ import {
   registerInviteFormSchema,
   type RegisterInviteFormInput,
 } from "@/lib/schemas/register-invite";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { useRouter, useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -181,7 +180,6 @@ export default function EnregistrementInner() {
             Retour à l’accueil
           </Button>
         </div>
-        <ToastContainer autoClose={2000} />
       </main>
     );
   }
@@ -301,8 +299,6 @@ export default function EnregistrementInner() {
           {isSubmitting ? "Création en cours..." : "Créer mon compte"}
         </Button>
       </form>
-
-      <ToastContainer autoClose={2000} />
     </main>
   );
 }

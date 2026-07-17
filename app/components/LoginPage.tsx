@@ -3,22 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { ReactNode } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { paths } from "@/lib/paths";
+import { api } from "@/lib/api";
 import { setAuthSession, type StoredUser } from "@/lib/auth-storage";
 import { getApiErrorMessage } from "@/lib/api-error";
 import { loginSchema, type LoginInput } from "@/lib/schemas/auth";
-
-function apiBaseUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_API_URL?.trim() || "http://localhost:8585"
-  ).replace(/\/$/, "");
-}
 
 function FormField({
   id,
@@ -46,7 +39,6 @@ function FormField({
   );
 }
 
-
 const LoginPage = () => {
   const navigate = useRouter();
   const {
@@ -59,19 +51,11 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     try {
-      const res = await axios.post<{
+      const res = await api.post<{
         access_token: string;
-        refresh_token: string;
         user: StoredUser;
-      }>(`${apiBaseUrl()}${paths.authLogin}`, data, {
-        withCredentials: true,
-        headers: { "Content-Type": "application/json" },
-      });
-      setAuthSession(
-        res.data.access_token,
-        res.data.refresh_token,
-        res.data.user,
-      );
+      }>(paths.authLogin, data);
+      setAuthSession(res.data.access_token, res.data.user);
       toast.success("Connexion réussie !");
       setTimeout(() => {
         navigate.push("/home");
@@ -121,7 +105,6 @@ const LoginPage = () => {
       >
         Se connecter
       </Button>
-      <ToastContainer autoClose={2500} position="bottom-center" />
     </form>
   );
 };

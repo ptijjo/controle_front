@@ -5,8 +5,7 @@ import { InputsFormulaire } from "@/interface/inputFormulaire";
 import StepSignature from "./steps/StepSignature";
 import { api } from "@/lib/api";
 import { paths } from "@/lib/paths";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import ConformiteArret from "./steps/ConformiteArret";
@@ -85,8 +84,8 @@ export default function MultiStepForm() {
             if (response.data.message === "Formulaire crée avec succès") {
                 toast.success(
                     data.carNonPasse
-                        ? "Signalement « car non passé » envoyé !"
-                        : "Formulaire envoyé et validé !"
+                        ? "Signalement « car non passé » enregistré ! Le PDF sera envoyé sous peu."
+                        : "Formulaire enregistré ! Le PDF sera envoyé par e-mail sous peu."
                 );
                 setTimeout(() => {
                     navigate.push("/home")
@@ -112,7 +111,7 @@ export default function MultiStepForm() {
         try {
             const response = await api.post(paths.formulaire, payload);
             if (response.data.message === "Formulaire crée avec succès") {
-                toast.success("Signalement « car non passé » envoyé !");
+                toast.success("Signalement « car non passé » enregistré ! Le PDF sera envoyé sous peu.");
                 setTimeout(() => {
                     navigate.push("/home");
                 }, 2000);
@@ -302,7 +301,6 @@ export default function MultiStepForm() {
                     )}
                 </div>
             </form>
-            <ToastContainer autoClose={2000} />
         </FormProvider>
     );
 }

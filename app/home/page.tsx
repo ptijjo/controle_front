@@ -24,6 +24,8 @@ const Home = () => {
     user && (user.role === "controleur" || user.role === "chef_service");
   const canSeeUsers =
     user && (user.role === "controleur" || user.role === "chef_service");
+  const canExportExcel =
+    user && (user.role === "controleur" || user.role === "chef_service");
 
   const handleLogout = async () => {
     setLoggingOut(true);
@@ -80,6 +82,7 @@ const Home = () => {
           </Link>
           <p className="text-center text-sm md:text-base">Nouveau formulaire</p>
         </div>
+        {canExportExcel && (
         <div className="flex flex-col items-center gap-3 md:gap-4">
           <button
             type="button"
@@ -98,6 +101,7 @@ const Home = () => {
             <p className="max-w-xs text-center text-xs text-red-600">{exportError}</p>
           )}
         </div>
+        )}
         {canAddUser && (
           <div className="flex flex-col items-center gap-3 md:gap-4">
             <Link
